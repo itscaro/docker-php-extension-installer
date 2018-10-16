@@ -547,6 +547,19 @@ then
 			MODULE_SOURCE=''
 			MODULE_SOURCE_CONFIGOPTIONS=''
 			case "${PHP_MODULE_TO_INSTALL}" in
+				amqp)
+					if test ${PHP_MAJMIN_VERSION} -ge 703
+					then
+						# Temporary workaround until amqp > 1.9.3 is relesed
+						MODULE_SOURCE=https://github.com/pdezwart/php-amqp/archive/master.tar.gz
+						cd "$(getPackageSource https://github.com/pdezwart/php-amqp/archive/master.tar.gz)"
+						phpize
+						./configure
+						make
+						make install
+						cd -
+					fi
+					;;
 				cmark)
 					MODULE_SOURCE=https://github.com/krakjoe/cmark/archive/v1.0.0.tar.gz
 					cd "$(getPackageSource https://github.com/commonmark/cmark/archive/0.28.3.tar.gz)"
